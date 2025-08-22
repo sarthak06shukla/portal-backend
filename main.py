@@ -243,15 +243,15 @@ def read_root():
         }
     }
 
+@app.get("/test")
+def test_endpoint():
+    """Test endpoint without database dependency"""
+    return {"message": "Test endpoint works"}
+
 @app.get("/companies")
-def get_companies(db: sqlite3.Connection = Depends(get_db)):
-    """Get list of all companies"""
-    result = execute_query(db, """
-        SELECT DISTINCT company 
-        FROM stock_prices 
-        ORDER BY company
-    """)
-    return [row["company"] for row in result]
+def get_companies():
+    """Get list of all companies - temporary without database"""
+    return ["TCS", "Infosys", "Wipro"]  # Temporary hardcoded response
 
 @app.get("/reports/search")
 def search_reports(
